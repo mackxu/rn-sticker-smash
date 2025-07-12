@@ -1,50 +1,61 @@
-# Welcome to your Expo app 👋
+# Sticker Smash
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Install expo-image-picker
 
-## Get started
+ImagePicker.launchImageLibraryAsync
 
-1. Install dependencies
+## icons
 
-   ```bash
-   npm install
-   ```
+@expo/vector-icons/MaterialIcons
 
-2. Start the app
+## Modal
 
-   ```bash
-   npx expo start
-   ```
+- animationType
 
-In the output, you'll find options to open the app in a
+## FlatList
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## react-native-gesture-handler
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- GestureHandlerRootView
+- Gesture
+- GestureDetector
 
-## Get a fresh project
+Gesture.Tap()
 
-When you're ready, run:
+Gesture.Pan().onChange()
 
-```bash
-npm run reset-project
-```
+## react-native-reanimated
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- Animated.Image
+- useSharedValue
+- useAnimatedStyle
+- withSpring
 
-## Learn more
+## react-native-view-shot
 
-To learn more about developing your project with Expo, look at the following resources:
+captureRef
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## expo-media-library
 
-## Join the community
+- usePermissions()
+- saveToLibraryAsync()
 
-Join our community of developers creating universal apps.
+## dom-to-image
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Platform from react-native
+- domtoimage.toJpeg()
+-
+
+## react-native-safe-area-context
+
+A flexible way to handle safe area
+
+## react-native-view-shot expo-media-library
+
+## react-native-gesture-handler
+
+GestureHandlerRootView, Gesture 静态类, GestureDetector 组件
+
+## react-native-reanimated
+
+useAnimatedStyle, useSharedValue, withSpring

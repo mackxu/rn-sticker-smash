@@ -1,75 +1,103 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { AppOptions } from "@/components/AppOptions";
+import { Button } from "@/components/Button";
+import { EmojiList } from "@/components/EmojiList";
+import { EmojiPicker } from "@/components/EmojiPicker";
+import { EmojiSticker } from "@/components/EmojiSticker";
+import ImageViewer from "@/components/ImageViewer";
+import { launchImageLibraryAsync } from "expo-image-picker";
+import * as MediaLibrary from "expo-media-library";
+import { useRef, useState } from "react";
+import { ImageSourcePropType, StyleSheet, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { captureRef } from "react-native-view-shot";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const PlaceholderImage = require("@/assets/images/background-image.png");
 
-export default function HomeScreen() {
+export default function Index() {
+  const [uploadImage, setUploadImage] = useState("");
+  const [showAppOptions, setShowAppOptions] = useState(false);
+  const [isModalShow, setIsModalShow] = useState(false);
+  const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType | undefined>();
+
+  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
+  if (permissionResponse === null) {
+    requestPermission();
+  }
+
+  const pickImage = async () => {
+    const result = await launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1, 2],
+      quality: 1,
+    });
+    if (result.canceled) return;
+    // console.log(result.assets[0]);
+    setUploadImage(result.assets[0].uri);
+    setShowAppOptions(true);
+  };
+
+  const onReset = () => {
+    setUploadImage("");
+    setShowAppOptions(false);
+    setPickedEmoji(undefined);
+  };
+
+  const imageRef = useRef<View>(null);
+  const onSaveImageAsync = async () => {
+    try {
+      if (!imageRef.current) return;
+      const localURI = await captureRef(imageRef, {
+        height: 440,
+      });
+      await MediaLibrary.saveToLibraryAsync(localURI);
+      if (localURI) {
+        alert("保存成功");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onAddSticker = () => {
+    setIsModalShow(true);
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <GestureHandlerRootView style={styles.container}>
+      <View style={styles.imageContainer}>
+        <View ref={imageRef} collapsable={false}>
+          <ImageViewer imgSource={PlaceholderImage} uploadImage={uploadImage} />
+          {pickedEmoji && <EmojiSticker emoji={pickedEmoji} size={40} />}
+        </View>
+      </View>
+      {showAppOptions ? (
+        <AppOptions onReset={onReset} onSave={onSaveImageAsync} onAddSticker={onAddSticker} />
+      ) : (
+        <View style={styles.footer}>
+          <Button label="上传图片" theme="primary" onPress={pickImage}></Button>
+          <Button label="使用本图" onPress={() => setShowAppOptions(true)}></Button>
+        </View>
+      )}
+      <EmojiPicker isVisible={isModalShow} onClose={() => setIsModalShow(false)}>
+        <EmojiList onSelect={setPickedEmoji} />
+      </EmojiPicker>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#25292e",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  imageContainer: {
+    flex: 1,
+    paddingTop: 28,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  footer: {
+    flex: 1 / 3,
+    alignItems: "center",
   },
 });
