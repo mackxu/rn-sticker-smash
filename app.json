@@ -12,8 +12,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.duoduoxu.StickerSmash",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false,
-        "NSPhotoLibraryUsageDescription": "This app wants to read your photo library in order to share photos with friends"
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -37,6 +36,14 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "isAccessMediaLocationEnabled": true
         }
       ]
     ],
