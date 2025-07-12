@@ -12,7 +12,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.duoduoxu.StickerSmash",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSPhotoLibraryUsageDescription": "This app wants to read your photo library in order to share photos with friends"
       }
     },
     "android": {

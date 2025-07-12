@@ -61,3 +61,7 @@ GestureHandlerRootView, Gesture 静态类, GestureDetector 组件
 useAnimatedStyle, useSharedValue, withSpring
 
 ## Expo Go vs
+
+## proxy setting
+
+export http_proxy="http://127.0.0.1:7890" export https_proxy="http://127.0.0.1:7890"
