@@ -59,3 +59,5 @@ GestureHandlerRootView, Gesture 静态类, GestureDetector 组件
 ## react-native-reanimated
 
 useAnimatedStyle, useSharedValue, withSpring
+
+## Expo Go vs
