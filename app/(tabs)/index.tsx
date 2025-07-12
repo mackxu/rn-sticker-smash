@@ -34,7 +34,6 @@ export default function Index() {
     if (result.canceled) return;
     // console.log(result.assets[0]);
     setUploadImage(result.assets[0].uri);
-    setShowAppOptions(true);
   };
 
   const onReset = () => {
