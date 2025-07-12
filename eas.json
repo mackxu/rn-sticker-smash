@@ -20,13 +20,15 @@
         "simulator": true
       }
     },
-    "development-simulator": {
+    "dev-simulator": {
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
         "simulator": true
       },
-      "environment": "development"
+      "env": {
+        "APP_VARIANT": "development"
+      }
     }
   },
   "submit": {
